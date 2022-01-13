@@ -49,14 +49,21 @@ server <- function(input, output) {
   owid <-  read.csv2("https://covid.ourworldindata.org/data/owid-covid-data.csv", 
                      header = TRUE, sep = ",", dec = "." )
   
-
-  loc <- subset(owid, location == "Germany")
-  range <- input$Date # interval
+# 
+#   loc <- subset(owid, location == "Germany")
+#   range <- input$Date # interval
   
-  output$p <- renderPlotly({
-    plot_ly(loc, x = ~date, y = ~new_cases) 
-      add_lines()
-  })
+  # output$p <- renderPlotly({
+  #   plot_ly(loc, x = ~date, y = ~new_cases) 
+  #     add_lines()
+  # })
+  
+  
+  # loc <- subset(owid, location == "Germany")
+  # # plot(as.Date(loc[,'date']), loc[, 'new_cases'], type = 'l')
+  # y <- c(150:200)
+  # plot(as.Date(loc[y,'date']), loc[y, 'new_cases'], type = 'l',
+  #      main = 'cases in Gemany per day', xlab = 'day', ylab = 'cases')
   
   
 }

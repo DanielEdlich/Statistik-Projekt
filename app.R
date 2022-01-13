@@ -12,6 +12,7 @@ library(shinydashboard)
 library(tidyverse)
 library(data.table)
 library(DT)
+library(plotly)
 
 # Define UI for application that draws a histogram
 ui <- dashboardPage(
@@ -25,9 +26,9 @@ ui <- dashboardPage(
                               vaccinated="vaccinated")),
     sliderInput(inputId = "Date",
                 label = "Choose Date:",
-                min = (as.Date("2006-01-01","%Y-%m-%d")),
+                min = (as.Date("2020-01-01","%Y-%m-%d")),
                 max = (as.Date("2022-01-01","%Y-%m-%d")),
-                value = c(as.Date("2006-01-01","%Y-%m-%d"),as.Date("2022-01-01","%Y-%m-%d")),
+                value = c(as.Date("2020-01-01","%Y-%m-%d"),as.Date("2022-01-01","%Y-%m-%d")),
                 ticks = FALSE
                 
     ),
@@ -35,63 +36,31 @@ ui <- dashboardPage(
     checkboxInput(inputId = "ger", label = "Germany", value=FALSE, width = NULL)
     
   ),
-  dashboardBody()
+  dashboardBody(
+    
+    # plotlyOutput(outputId = p)
+  )
 )
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {}
+server <- function(input, output) {
+  
+  # https://github.com/owid/covid-19-data/blob/master/public/data/README.md
+  owid <-  read.csv2("https://covid.ourworldindata.org/data/owid-covid-data.csv", 
+                     header = TRUE, sep = ",", dec = "." )
+  
+
+  loc <- subset(owid, location == "Germany")
+  range <- input$Date # interval
+  
+  output$p <- renderPlotly({
+    plot_ly(loc, x = ~date, y = ~new_cases) 
+      add_lines()
+  })
+  
+  
+}
 
 
 # Run the application 
 shinyApp(ui = ui, server = server)
-
-
-# #
-# # This is a Shiny web application. You can run the application by clicking
-# # the 'Run App' button above.
-# #
-# # Find out more about building applications with Shiny here:
-# #
-# #    http://shiny.rstudio.com/
-# #
-# 
-# library(shiny)
-# 
-# # Define UI for application that draws a histogram
-# ui <- fluidPage(
-# 
-#     # Application title
-#     titlePanel("Covid-Data"),
-# 
-#     # Sidebar with a slider input for number of bins 
-#     sidebarLayout(
-#         sidebarPanel(
-#             sliderInput("bins",
-#                         "Number of bins:",
-#                         min = 1,
-#                         max = 50,
-#                         value = 30)
-#         ),
-# 
-#         # Show a plot of the generated distribution
-#         mainPanel(
-#            plotOutput("distPlot")
-#         )
-#     )
-# )
-# 
-# # Define server logic required to draw a histogram
-# server <- function(input, output) {
-# 
-#     output$distPlot <- renderPlot({
-#         # generate bins based on input$bins from ui.R
-#         x    <- faithful[, 2]
-#         bins <- seq(min(x), max(x), length.out = input$bins + 1)
-# 
-#         # draw the histogram with the specified number of bins
-#         hist(x, breaks = bins, col = 'darkgray', border = 'white')
-#     })
-# }
-# 
-# # Run the application 
-# shinyApp(ui = ui, server = server)

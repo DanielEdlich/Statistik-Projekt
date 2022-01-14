@@ -22,7 +22,6 @@ df <- data.table::fread("D:/Code/R/Statistik-Projekt/data/owid-covid-data.csv")
 
 extractCountryData <- function(country) {
   loc <- subset(df, location == country)
-  
 }
 
 
@@ -35,14 +34,14 @@ ui <- dashboardPage(
   dashboardHeader(title = "Covid19 Statistik", titleWidth = 300), 
   dashboardSidebar(
     includeCSS("www/style.css"),
-    selectInput(inputId="var_a",
+    selectInput(inputId="var",
                 label="Choose Variable:",
-                choices= list(cases="Cases",
-                              deaths= "deaths",
-                              vaccinated="vaccinated")),
+                choices= list(cases="new_cases",
+                              deaths= "new_deaths",
+                              vaccinated="new_vaccinations")),
     sliderInput(inputId = "Date",
                 label = "Choose Date:",
-                min = (as.Date("2020-03-01","%Y-%m-%d")),
+                min = (as.Date("2020-01-01","%Y-%m-%d")),
                 max = (as.Date("2022-01-01","%Y-%m-%d")),
                 value = c(as.Date("2020-01-01","%Y-%m-%d"),as.Date("2022-01-01","%Y-%m-%d")),
                 ticks = FALSE
@@ -53,10 +52,10 @@ ui <- dashboardPage(
     # checkboxInput(inputId = "ger", label = "Germany", value=FALSE, width = NULL),
     checkboxGroupInput("checkGroup", 
                        h3("Checkbox group"), 
-                       choices = list("Germany" = 1 , 
-                                      "France" = 2, 
-                                      "Netherlands" = 3),
-                       selected = 1)
+                       choices = list("Germany" = "Germany" , 
+                                      "France" = "France", 
+                                      "Netherlands" = "Netherlands"),
+                       selected = "Germany")
     ),
     
   dashboardBody(
@@ -64,7 +63,7 @@ ui <- dashboardPage(
     textOutput("min_max"),
     
     
-    box(plotOutput("plot"), width = 8)
+    box(plotOutput("plot"), width = 15)
 
   )
 )
@@ -74,29 +73,28 @@ server <- function(input, output) {
   
   
   output$min_max <- renderText({ 
-    paste("You have chosen a range that goes from",
-          input$Date[1], "to", input$Date[2])
+    paste( var() )
   })
   
   
   
-  reactive({
-  loc <- extractCountryData(input$checkGroup[1])
-  })
-  output$min_max <- renderText({ 
-    paste()})
+  
+  loc <- reactive({extractCountryData(input$checkGroup)
+   })
+  
+  var <- reactive({input$var})
   
   output$plot <- renderPlot({
     
     y <- seq.Date(input$Date[1], input$Date[2], 1)
     
-    ggplot(data = loc ,aes(x = as.Date(date), y = new_cases)) +
+    ggplot(data = loc() ,aes(x = as.Date(date))) +
       xlim(input$Date[1], input$Date[2]) +
-      geom_line()
+      geom_line(aes_string(y = input$var))
 
   })
   
-  
+  #
   
   
   

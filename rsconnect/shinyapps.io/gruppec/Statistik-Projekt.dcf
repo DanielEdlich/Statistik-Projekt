@@ -1,0 +1,14 @@
+name: Statistik-Projekt
+title: Statistik-Projekt
+username:
+account: gruppec
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5450974
+bundleId: 5474513
+url: https://gruppec.shinyapps.io/Statistik-Projekt/
+when: 1642360168.23444
+lastSyncTime: 1642360168.23444
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: data/owid-covid-data.csv

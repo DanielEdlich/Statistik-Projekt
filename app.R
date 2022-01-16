@@ -15,8 +15,8 @@ library(DT)
 library(ggplot2)
 # library(plotly)
 
-df <- data.table::fread("D:/Code/R/Statistik-Projekt/data/owid-covid-data.csv")
-# df <- data.table::fread("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+# df <- data.table::fread("D:/Code/R/Statistik-Projekt/data/owid-covid-data.csv")
+df <- data.table::fread("https://covid.ourworldindata.org/data/owid-covid-data.csv")
 extractCountryData <- function(country) {
   loc <- subset(df, location == country, )
 }
@@ -53,6 +53,7 @@ ui <- dashboardPage(
                        choices = list("Austria" = "Austria",
                                        "Belgium" = "Belgium",
                                        "Bulgaria" = "Bulgaria",
+                                       "Croatia" = "Croatia",
                                        "Czechia" = "Czechia",
                                        "Denmark" = "Denmark",
                                        "Estonia" = "Estonia",
@@ -69,6 +70,8 @@ ui <- dashboardPage(
                                        "Norway" = "Norway",
                                        "Poland" = "Poland",
                                        "Portugal" = "Portugal",
+                                       "Romania" = "Romania",
+                                       "Serbia" = "Serbia",
                                        "Slovakia" = "Slovakia",
                                        "Slovenia" = "Slovenia",
                                        "Spain" = "Spain",
@@ -82,7 +85,7 @@ ui <- dashboardPage(
     
   dashboardBody(
     
-    box(plotOutput("plot"), width = 15)
+    box(plotOutput("plot"), width = 15) 
 
   )
 )
@@ -124,7 +127,10 @@ server <- function(input, output, session) {
               "Sweden" = "#77478B",
               "Switzerland" = "#BF6FA8",
               "Ukraine" = "#0A4E0D",
-              "United Kingdom" = "#B7984B")
+              "United Kingdom" = "#B7984B",
+              "Croatia" = "#760F0F",
+              "Romania" = "#07415E",
+              "Slovakia" = "#778186")
   
   output$plot <- renderPlot({
     
@@ -135,6 +141,7 @@ server <- function(input, output, session) {
       {if ("Austria" %in% input$checkGroup) geom_line(data = extractCountryData("Austria"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Austria") )} +
       {if ("Belgium" %in% input$checkGroup) geom_line(data = extractCountryData("Belgium"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Belgium" ))} +
       {if ("Bulgaria" %in% input$checkGroup) geom_line(data = extractCountryData("Bulgaria"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Bulgaria" ))} +
+      {if ("Croatia" %in% input$checkGroup) geom_line(data = extractCountryData("Croatia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Croatia" ))} +
       {if ("Czechia" %in% input$checkGroup) geom_line(data = extractCountryData("Czechia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Czechia" ))} +
       {if ("Denmark" %in% input$checkGroup) geom_line(data = extractCountryData("Denmark"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Denmark" ))} +
       {if ("Estonia" %in% input$checkGroup) geom_line(data = extractCountryData("Estonia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Estonia" ))} +
@@ -151,6 +158,8 @@ server <- function(input, output, session) {
       {if ("Norway" %in% input$checkGroup) geom_line(data = extractCountryData("Norway"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Norway" ))} +
       {if ("Poland" %in% input$checkGroup) geom_line(data = extractCountryData("Poland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Poland" ))} +
       {if ("Portugal" %in% input$checkGroup) geom_line(data = extractCountryData("Portugal"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Portugal" ))} +
+      {if ("Romania" %in% input$checkGroup) geom_line(data = extractCountryData("Romania"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Romania" ))} +
+      {if ("Serbia" %in% input$checkGroup) geom_line(data = extractCountryData("Serbia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Serbia" ))} +
       {if ("Slovakia" %in% input$checkGroup) geom_line(data = extractCountryData("Slovakia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Slovakia" ))} +
       {if ("Slovenia" %in% input$checkGroup) geom_line(data = extractCountryData("Slovenia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Slovenia" ))} +
       {if ("Spain" %in% input$checkGroup) geom_line(data = extractCountryData("Spain"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var)), color = "Spain" ))} +
@@ -165,7 +174,9 @@ server <- function(input, output, session) {
         new_cases_smoothed_per_million = ylab("cases in million"),
         new_deaths_smoothed_per_million = ylab("deaths in million"),
         new_vaccinations_smoothed_per_million = ylab("vacination in million")
-      ) 
+      ) +
+      
+      theme()
     
     
 

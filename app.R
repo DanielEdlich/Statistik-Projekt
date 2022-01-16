@@ -146,7 +146,7 @@ server <- function(input, output, session) {
       switch( input$var,
         new_cases_smoothed_per_million = ylab("cases in million"),
         new_deaths_smoothed_per_million = ylab("deaths in million"),
-        new_vaccinations_smoothed_per_million = lab("vacination in million")
+        new_vaccinations_smoothed_per_million = ylab("vacination in million")
       )
     
   

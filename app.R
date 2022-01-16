@@ -18,8 +18,8 @@ library(DT)
 # owid <-  read.csv2("/data/owid-covid-data.csv",
 #                    header = TRUE, sep = ",", dec = "." )
 
-df <- data.table::fread("D:/Code/R/Statistik-Projekt/data/owid-covid-data.csv")
-#df <- data.table::fread("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+#df <- data.table::fread("D:/Code/R/Statistik-Projekt/data/owid-covid-data.csv")
+df <- data.table::fread("https://covid.ourworldindata.org/data/owid-covid-data.csv")
 extractCountryData <- function(country) {
   loc <- subset(df, location == country, )
 }
@@ -115,32 +115,32 @@ server <- function(input, output, session) {
     
     ggplot() +
       xlim(input$Date[1], input$Date[2]) +
-      {if ("Austria" %in% input$checkGroup) geom_line(data = extractCountryData("Austria"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "cornflowerblue" )} +
-      {if ("Belgium" %in% input$checkGroup) geom_line(data = extractCountryData("Belgium"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "coral3" )} +
-      {if ("Bulgaria" %in% input$checkGroup) geom_line(data = extractCountryData("Bulgaria"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "chartreuse1" )} +
-      {if ("Czechia" %in% input$checkGroup) geom_line(data = extractCountryData("Czechia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "chartreuse4" )} +
-      {if ("Denmark" %in% input$checkGroup) geom_line(data = extractCountryData("Denmark"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "cadetblue4" )} +
-      {if ("Estonia" %in% input$checkGroup) geom_line(data = extractCountryData("Estonia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "cadetblue2" )} +
-      {if ("Finland" %in% input$checkGroup) geom_line(data = extractCountryData("Finland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "brown4" )} +
-      {if ("France" %in% input$checkGroup) geom_line(data = extractCountryData("France"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blueviolet" )} +
-      {if ("Germany" %in% input$checkGroup) geom_line(data = extractCountryData("Germany"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Greece" %in% input$checkGroup) geom_line(data = extractCountryData("Greece"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("Hungary" %in% input$checkGroup) geom_line(data = extractCountryData("Hungary"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Iceland" %in% input$checkGroup) geom_line(data = extractCountryData("Iceland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("Ireland" %in% input$checkGroup) geom_line(data = extractCountryData("Ireland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Italy" %in% input$checkGroup) geom_line(data = extractCountryData("Italy"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("Luxembourg" %in% input$checkGroup) geom_line(data = extractCountryData("Luxembourg"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} + 
-      {if ("Netherlands" %in% input$checkGroup) geom_line(data = extractCountryData("Netherlands"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Norway" %in% input$checkGroup) geom_line(data = extractCountryData("Norway"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("Poland" %in% input$checkGroup) geom_line(data = extractCountryData("Poland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Portugal" %in% input$checkGroup) geom_line(data = extractCountryData("Portugal"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("Slovakia" %in% input$checkGroup) geom_line(data = extractCountryData("Slovakia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Slovenia" %in% input$checkGroup) geom_line(data = extractCountryData("Slovenia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("Spain" %in% input$checkGroup) geom_line(data = extractCountryData("Spain"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Sweden" %in% input$checkGroup) geom_line(data = extractCountryData("Sweden"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("Switzerland" %in% input$checkGroup) geom_line(data = extractCountryData("Switzerland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
-      {if ("Ukraine" %in% input$checkGroup) geom_line(data = extractCountryData("Ukraine"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "green" )} +
-      {if ("United Kingdom" %in% input$checkGroup) geom_line(data = extractCountryData("United Kingdom"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "blue" )} +
+      {if ("Austria" %in% input$checkGroup) geom_line(data = extractCountryData("Austria"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FFAA00" )} +
+      {if ("Belgium" %in% input$checkGroup) geom_line(data = extractCountryData("Belgium"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FFF000" )} +
+      {if ("Bulgaria" %in% input$checkGroup) geom_line(data = extractCountryData("Bulgaria"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#BDFF00" )} +
+      {if ("Czechia" %in% input$checkGroup) geom_line(data = extractCountryData("Czechia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#13FF00" )} +
+      {if ("Denmark" %in% input$checkGroup) geom_line(data = extractCountryData("Denmark"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#00FFD1" )} +
+      {if ("Estonia" %in% input$checkGroup) geom_line(data = extractCountryData("Estonia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#00E0FF" )} +
+      {if ("Finland" %in% input$checkGroup) geom_line(data = extractCountryData("Finland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FF0000" )} +
+      {if ("France" %in% input$checkGroup) geom_line(data = extractCountryData("France"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#0097FF" )} +
+      {if ("Germany" %in% input$checkGroup) geom_line(data = extractCountryData("Germany"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#0068FF" )} +
+      {if ("Greece" %in% input$checkGroup) geom_line(data = extractCountryData("Greece"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#5D00FF" )} +
+      {if ("Hungary" %in% input$checkGroup) geom_line(data = extractCountryData("Hungary"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#9300FF" )} +
+      {if ("Iceland" %in% input$checkGroup) geom_line(data = extractCountryData("Iceland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#BD00FF" )} +
+      {if ("Ireland" %in% input$checkGroup) geom_line(data = extractCountryData("Ireland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#F300FF" )} +
+      {if ("Italy" %in% input$checkGroup) geom_line(data = extractCountryData("Italy"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FF00E0" )} +
+      {if ("Luxembourg" %in% input$checkGroup) geom_line(data = extractCountryData("Luxembourg"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FF0097" )} + 
+      {if ("Netherlands" %in% input$checkGroup) geom_line(data = extractCountryData("Netherlands"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FF0070" )} +
+      {if ("Norway" %in% input$checkGroup) geom_line(data = extractCountryData("Norway"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FF0036" )} +
+      {if ("Poland" %in% input$checkGroup) geom_line(data = extractCountryData("Poland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#FF001B" )} +
+      {if ("Portugal" %in% input$checkGroup) geom_line(data = extractCountryData("Portugal"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#7CD1FF" )} +
+      {if ("Slovakia" %in% input$checkGroup) geom_line(data = extractCountryData("Slovakia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#2C8F57" )} +
+      {if ("Slovenia" %in% input$checkGroup) geom_line(data = extractCountryData("Slovenia"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#0C4B6D" )} +
+      {if ("Spain" %in% input$checkGroup) geom_line(data = extractCountryData("Spain"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#ABB462" )} +
+      {if ("Sweden" %in% input$checkGroup) geom_line(data = extractCountryData("Sweden"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#77478B" )} +
+      {if ("Switzerland" %in% input$checkGroup) geom_line(data = extractCountryData("Switzerland"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#BF6FA8" )} +
+      {if ("Ukraine" %in% input$checkGroup) geom_line(data = extractCountryData("Ukraine"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#0A4E0D" )} +
+      {if ("United Kingdom" %in% input$checkGroup) geom_line(data = extractCountryData("United Kingdom"), aes(x = as.Date(date, "%Y-%m-%d"), y = eval(as.name(input$var))), color = "#B7984B" )} +
      
       xlab("date") +
       switch( input$var,

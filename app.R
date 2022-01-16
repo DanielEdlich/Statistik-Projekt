@@ -85,8 +85,9 @@ ui <- dashboardPage(
     
   dashboardBody(
     
-    box(plotOutput("plot"), width = 15) 
-
+    box(plotOutput("plot"), width = 15) ,
+    br(),
+    p("Source: ", a("Our World in Data", href = ("https://github.com/owid/covid-19-data/tree/master/public/data")))
   )
 )
 
